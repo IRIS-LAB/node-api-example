@@ -1,1 +1,1 @@
-# node-api-example
+# hivent-resources-api
