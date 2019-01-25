@@ -1,39 +1,33 @@
-export default ({ groups }, { getStatusCode }, logger, { MissingResourceError }) => {
+export default ({ groups }, logger, { MissingResourceError }) => {
   return { findById, findAll, create, remove, update }
 
   /**
    * findById
    */
-  async function findById(req, res) {
+  async function findById(req, res, next) {
     const { id } = req.params
     try {
       const result = await groups.findById(id)
       res.status(200).send(result)
-    } catch (e) {
-      logger.error(`${e.data || e.message} : ${e.stack}`)
-      res.status(getStatusCode(e)).send({
-        data: e.data || e.message
-      })
+    } catch (err) {
+      return next(err)
     }
   }
   /**
    * findAll
    */
-  async function findAll(req, res) {
+  async function findAll(req, res, next) {
     try {
       const result = await groups.findAll()
       res.status(200).send(result)
-    } catch (e) {
-      logger.error(`${e.data || e.message} : ${e.stack}`)
-      res.status(getStatusCode(e)).send({
-        data: e.data || e.message
-      })
+    } catch (err) {
+      return next(err)
     }
   }
   /**
    * create
    */
-  async function create(req, res) {
+  async function create(req, res, next) {
     const { body } = req
     try {
       const id = await groups.create(body)
@@ -41,32 +35,26 @@ export default ({ groups }, { getStatusCode }, logger, { MissingResourceError })
         .set('Location', `/groups/${id}`)
         .status(201)
         .send()
-    } catch (e) {
-      logger.error(`${e.data || e.message} : ${e.stack}`)
-      res.status(getStatusCode(e)).send({
-        data: e.data || e.message
-      })
+    } catch (err) {
+      return next(err)
     }
   }
   /**
    * remove
    */
-  async function remove(req, res) {
+  async function remove(req, res, next) {
     const { id } = req.params
     try {
       await groups.remove(id)
       res.status(204).send()
-    } catch (e) {
-      logger.error(`${e.data || e.message} : ${e.stack}`)
-      res.status(getStatusCode(e)).send({
-        data: e.data || e.message
-      })
+    } catch (err) {
+      return next(err)
     }
   }
   /**
    * update
    */
-  async function update(req, res) {
+  async function update(req, res, next) {
     const { id } = req.params
     const { body } = req
     body.id = id
@@ -74,11 +62,8 @@ export default ({ groups }, { getStatusCode }, logger, { MissingResourceError })
     try {
       await groups.update(body)
       res.status(200).send()
-    } catch (e) {
-      logger.error(`${e.data || e.message} : ${e.stack}`)
-      res.status(getStatusCode(e)).send({
-        data: e.data || e.message
-      })
+    } catch (err) {
+      return next(err)
     }
   }
 }

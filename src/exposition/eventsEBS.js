@@ -1,11 +1,11 @@
-export default ({ events }, { getStatusCode }, config, logger, { MissingResourceError }) => {
+export default ({ events }, config, logger, { MissingResourceError }) => {
   return { stream, testStream }
 
   /**
    * stream
    * @example /smart-api/events?groupId=id&startDateTime=201901011830&endDateTime=201901011830
    */
-  async function stream(req, res) {
+  async function stream(req, res, next) {
     const { groupId, startDateTime, endDateTime } = req.query
     try {
       // let request last as long as possible
@@ -30,15 +30,12 @@ export default ({ events }, { getStatusCode }, config, logger, { MissingResource
         events.unsubscribe(subscriber)
         logger.debug(`Remove subscriber on ${groupId}`)
       })
-    } catch (e) {
-      logger.error(`${e.data || e.message} : ${e.stack}`)
-      res.status(getStatusCode(e)).send({
-        data: e.data || e.message
-      })
+    } catch (err) {
+      return next(err)
     }
   }
 
-  async function testStream(req, res) {
+  async function testStream(req, res, next) {
     const { groupId, message } = req.body
     events.publish(groupId, message)
     res.status(200).send()

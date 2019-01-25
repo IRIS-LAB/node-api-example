@@ -16,17 +16,21 @@ export default (logger, { MissingResourceError }) => {
       )
       next()
     },
+    errorHandler: (err, req, res, next) => {
+      if (res.headersSent) {
+        return next(err)
+      }
+      logger.error(`${err.data || err.message} : ${err.stack}`)
+      let status = 400
+      if (err instanceof MissingResourceError) {
+        status = 404
+      }
+      res.status(status).send({ data: err.data || err.message })
+    },
     enableCors: cors(),
     returnApplicationJson: (req, res, next) => {
       res.set('Content-Type', 'application/json')
       next()
-    },
-    getStatusCode: error => {
-      if (error instanceof MissingResourceError) {
-        return 404
-      } else {
-        return 400
-      }
     }
   }
 }

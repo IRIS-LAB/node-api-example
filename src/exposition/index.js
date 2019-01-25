@@ -10,8 +10,8 @@ export default (lbs, config, logger, exceptions) => {
   const utils = new Utils(logger, exceptions)
 
   const actuatorEBS = new ActuatorEBS(logger)
-  const groupsEBS = new GroupsEBS(lbs, utils, logger, exceptions)
-  const eventsEBS = new EventsEBS(lbs, utils, config, logger, exceptions)
+  const groupsEBS = new GroupsEBS(lbs, logger, exceptions)
+  const eventsEBS = new EventsEBS(lbs, config, logger, exceptions)
 
   return {
     route(app) {
@@ -35,6 +35,9 @@ export default (lbs, config, logger, exceptions) => {
       // events
       app.get('/events/events-stream', eventsEBS.stream)
       app.post('/events/events-stream', eventsEBS.testStream)
+
+      // handler global exception
+      app.use(utils.errorHandler)
     }
   }
 }
