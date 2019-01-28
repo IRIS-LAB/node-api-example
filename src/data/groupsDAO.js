@@ -6,7 +6,7 @@ export default ({ Groups }, logger, { MissingResourceError }) => {
    */
   async function findById(id) {
     const result = await Groups.findByPk(id)
-    if (!result) {
+    if (result == null || result == undefined) {
       throw new MissingResourceError()
     }
     return result.toJSON()
