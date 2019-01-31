@@ -1,4 +1,4 @@
-export default ({ groups }, logger, { MissingResourceError }) => {
+export default ({ groups }, logger, exceptions) => {
   return { findById, findAll, create, remove, update }
 
   /**

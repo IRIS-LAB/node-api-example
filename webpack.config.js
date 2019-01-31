@@ -8,6 +8,7 @@ module.exports = {
   externals: [nodeExternals()], // in order to ignore all modules in node_modules folder
   output: {
     path: path.join(__dirname, 'dist'),
+    publicPath: '/',
     filename: 'server.js'
   },
   module: {
@@ -26,7 +27,7 @@ module.exports = {
   },
   plugins: [
     new Dotenv({
-      path: './.env.production'
+      path: './.env'
     })
   ]
 }

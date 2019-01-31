@@ -1,7 +1,7 @@
 import cors from 'cors'
 import bodyParser from 'body-parser'
 
-export default (logger, { MissingResourceError }) => {
+export default (logger, { EntityNotFoundBusinessException, TechnicalException }) => {
   return {
     parseJSON: bodyParser.json(),
     logRequests: (req, res, next) => {
@@ -22,9 +22,12 @@ export default (logger, { MissingResourceError }) => {
       }
       logger.error(`${err.data || err.message} : ${err.stack}`)
       let status = 400
-      if (err instanceof MissingResourceError) {
+      if (err instanceof TechnicalException) {
+        status = 500
+      } else if (err instanceof EntityNotFoundBusinessException) {
         status = 404
       }
+
       res.status(status).send({ data: err.data || err.message })
     },
     enableCors: cors(),

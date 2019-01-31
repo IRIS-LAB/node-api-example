@@ -1,20 +1,9 @@
-class MissingResourceError extends Error {
-  constructor(data) {
-    super()
-    this.data = data
-  }
-}
-
-class ValidationError extends Error {
-  constructor(data) {
-    super()
-    this.data = data
-  }
-}
+import { BusinessException, EntityNotFoundBusinessException, TechnicalException } from 'iris-common'
 
 export default () => {
   return {
-    MissingResourceError,
-    ValidationError
+    BusinessException,
+    EntityNotFoundBusinessException,
+    TechnicalException
   }
 }

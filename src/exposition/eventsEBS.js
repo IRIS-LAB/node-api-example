@@ -1,4 +1,4 @@
-export default ({ events }, config, logger, { MissingResourceError }) => {
+export default ({ events }, config, logger, exceptions) => {
   return { stream, testStream }
 
   /**

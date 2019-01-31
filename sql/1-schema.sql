@@ -11,9 +11,11 @@ create table smart_group(
 create table preferences(
    id SERIAL primary key,
    group_id integer references smart_group(id),
-   start_display numeric(4,2) not null,
-   end_display numeric(4,2) not null,
-   refresh_value numeric(4,2) not null,
+   start_value numeric(4,2) not null,
+   end_value numeric(4,2) not null,
+   nb_slot_availabled numeric(4,2) not null,
+   nb_slot_displayed numeric(4,2) not null,
    slot numeric(4,2) not null,
-   unit varchar(255) not null
+   unit varchar(255) not null,
+   calendar_type varchar(255) not null
 );

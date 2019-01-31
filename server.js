@@ -1,11 +1,9 @@
 import express from 'express'
 
-import Lbs from './src/business'
-import config from './src/config'
-import Dao from './src/data'
-import Exceptions from './src/exceptions'
-import Ebs from './src/exposition'
-import logger from './src/logger'
+import config from '@/config'
+import Exceptions from '@/exceptions'
+import Ebs from '@/exposition'
+import logger from '@/logger'
 
 /*
 var profiler = require('gc-profiler')
@@ -20,10 +18,8 @@ const Api = async () => {
   // init common elements
   const exceptions = new Exceptions()
 
-  // define all layers
-  const dao = await new Dao(config, logger, exceptions)
-  const lbs = new Lbs(dao, config, logger, exceptions)
-  const ebs = new Ebs(lbs, config, logger, exceptions)
+  // define ebs layer
+  const ebs = await new Ebs(config, logger, exceptions)
 
   // define routes to app
   const app = express()
@@ -33,6 +29,8 @@ const Api = async () => {
 
 const port = config.expressPort
 const url = config.expressUrl
+
+logger.info(`Try to start ${config.appname}  on ${url}:${port}`)
 
 Api().then(app => {
   app.listen(port, () => {
