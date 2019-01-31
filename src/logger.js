@@ -26,12 +26,14 @@ const options = {
     level: config.logLevel,
     filename: `${appRoot}/log/` + logFileName,
     handleExceptions: true,
+    humanReadableUnhandledException: true,
     maxsize: 52428800, // 50MB
     maxFiles: 5
   },
   console: {
     level: config.logLevel,
     handleExceptions: true,
+    humanReadableUnhandledException: true,
     format: combine(colorize(), myFormat)
   }
 }
