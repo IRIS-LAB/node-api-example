@@ -1,6 +1,4 @@
 import Sequelize from 'sequelize'
-import logger from '../logger'
-import config from '../config.js'
 
 export default (logger, config) => {
   return new Sequelize(config.databaseName, config.databaseUser, config.databasePassword, {
