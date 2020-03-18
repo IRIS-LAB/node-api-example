@@ -4,11 +4,12 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=development nodemon --exec babel-node server.js",
-    "inspect": "cross-env NODE_ENV=development nodemon --exec babel-node server.js --inspect",
+    "start": "cross-env nodemon --exec babel-node server.js",
+    "start:docker": "npm run docker:bdd & npm run start",
     "build": "webpack --progress --display-error-details",
     "lint": "eslint src/**",
     "test": "jest spec",
+    "docker:bdd": "docker-compose down & docker-compose up",
     "coverage": "jest --collectCoverageFrom=src/**.js --coverage spec"
   },
   "repository": {
@@ -26,7 +27,7 @@
     "app-root-path": "^2.1.0",
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
-    "envie": "^1.5.0",
+    "dotenv-webpack": "^1.7.0",
     "express": "^4.16.4",
     "express-actuator": "^1.1.0",
     "express-basic-auth": "^1.1.6",
@@ -50,6 +51,7 @@
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
     "babel-loader": "^8.0.4",
+    "babel-plugin-root-import": "^6.1.0",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "cross-env": "^5.2.0",
@@ -59,6 +61,7 @@
     "sinon": "^7.2.3",
     "webpack": "^4.25.1",
     "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.14",
     "webpack-node-externals": "^1.7.2"
   }
 }

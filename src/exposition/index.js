@@ -4,10 +4,12 @@ import actuator from 'express-actuator'
 import ActuatorEBS from './actuatorEBS'
 import GroupsEBS from './groupsEBS'
 import EventsEBS from './eventsEBS'
+import Lbs from '@/business'
 
-export default (lbs, config, logger, exceptions) => {
+export default async (config, logger, exceptions) => {
   // init ebs required services
   const utils = new Utils(logger, exceptions)
+  const lbs = await new Lbs(config, logger, exceptions)
 
   const actuatorEBS = new ActuatorEBS(logger)
   const groupsEBS = new GroupsEBS(lbs, logger, exceptions)

@@ -1,6 +1,6 @@
 import Joi from 'joi'
 
-export default (validators, {}, pubsub, logger, { ValidationError }) => {
+export default (validators, {}, pubsub, logger, { BusinessException }) => {
   return { subscribe, unsubscribe, publish }
 
   /**

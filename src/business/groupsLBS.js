@@ -1,6 +1,6 @@
 import Joi from 'joi'
 
-export default ({ Group }, { groups }, logger, { ValidationError }) => {
+export default ({ Group }, { groups }, logger, { BusinessException }) => {
   return { findById, findAll, create, remove, update }
 
   /**
@@ -30,7 +30,7 @@ export default ({ Group }, { groups }, logger, { ValidationError }) => {
           context
         })
       )
-      throw new ValidationError(JSON.stringify(errorMessage))
+      throw new BusinessException(JSON.stringify(errorMessage))
     }
     // create object
     return await groups.create(data)
@@ -56,7 +56,7 @@ export default ({ Group }, { groups }, logger, { ValidationError }) => {
           context
         })
       )
-      throw new ValidationError(JSON.stringify(errorMessage))
+      throw new BusinessException(JSON.stringify(errorMessage))
     }
     // update object
     await groups.update(data)

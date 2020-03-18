@@ -1,4 +1,4 @@
-export default ({ Groups }, logger, { MissingResourceError }) => {
+export default ({ Groups }, logger, { EntityNotFoundBusinessException }) => {
   return { findById, findAll, create, remove, update }
 
   /**
@@ -7,7 +7,7 @@ export default ({ Groups }, logger, { MissingResourceError }) => {
   async function findById(id) {
     const result = await Groups.findByPk(id)
     if (result == null || result == undefined) {
-      throw new MissingResourceError()
+      throw new EntityNotFoundBusinessException()
     }
     return result.toJSON()
   }
